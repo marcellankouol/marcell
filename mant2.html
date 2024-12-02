@@ -1,0 +1,463 @@
+<html><head><base href="." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcyt Market - Votre destination shopping</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><circle cx="50" cy="50" r="45" fill="%232c3e50"/><text x="50" y="60" text-anchor="middle" fill="%232c3e50" font-size="40px" font-weight="bold">M</text></svg>');
+            background-repeat: repeat;
+            background-size: 200px;
+            background-attachment: fixed;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-svg {
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(52, 152, 219, 0.2) 0%, rgba(44, 62, 80, 0.2) 100%);
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
+        }
+
+        .category-card {
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card {
+            transition: transform 0.3s ease;
+            max-width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        #cart-modal .modal-body {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+            margin-top: 40px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        section[id], div[id] {
+            scroll-margin-top: 70px;
+        }
+
+        .typing-container {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        #electronics .row,
+        #computers .row,
+        #decoration .row,
+        #appliances .row,
+        #bedding .row {
+            flex-direction: column;
+        }
+
+        #electronics .col-md-4,
+        #computers .col-md-4,
+        #decoration .col-md-4,
+        #appliances .col-md-4,
+        #bedding .col-md-4 {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#2c3e50"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40px" font-weight="bold">M</text>
+                </svg>
+                Mant Market
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#electronics">Électronique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#computers">Informatique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#decoration">Décoration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#appliances">Électroménager</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bedding">Literie</a>
+                    </li>
+                </ul>
+                <div class="cart-icon" data-bs-toggle="modal" data-bs-target="#cart-modal">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Bienvenue chez Marcy  Market</h1>
+            <div class="typing-container">
+                <span id="typed-text"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <div class="container my-5">
+        <!-- Electronics Section -->
+        <div id="electronics" class="mb-5">
+            <h2 class="category-title">Électronique</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Smart TV 4K" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Smart TV 4K</h5>
+                            <p class="card-text">TV LED 55" Ultra HD avec Android TV</p>
+                            <p class="card-text"><strong>799.99 €</strong></p>
+                            <button class="btn btn-primary add-to-cart" data-id="1" data-name="Smart TV 4K" data-price="799.99">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decoration Section -->
+        <div id="decoration" class="mb-5">
+            <h2 class="category-title">Décoration</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Lampe Design" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Lampe Design Moderne</h5>
+                            <p class="card-text">Lampe de salon LED avec variateur</p>
+                            <p class="card-text"><strong>129.99 €</strong></p>
+                            <button class="btn btn-primary add-to-cart" data-id="2" data-name="Lampe Design Moderne" data-price="129.99">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Computers Section -->
+        <div id="computers" class="mb-5">
+            <h2 class="category-title">Informatique</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Ordinateur Portable" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Ordinateur Portable Pro</h5>
+                            <p class="card-text">Intel i7, 16GB RAM, 512GB SSD</p>
+                            <p class="card-text"><strong>1299.99 €</strong></p>
+                            <button class="btn btn-primary add-to-cart" data-id="3" data-name="Ordinateur Portable Pro" data-price="1299.99">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appliances Section -->
+        <div id="appliances" class="mb-5">
+            <h2 class="category-title">Électroménager</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Lave-linge" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Lave-linge Intelligent</h5>
+                            <p class="card-text">9kg, A+++, WiFi Connected</p>
+                            <p class="card-text"><strong>649.99 €</strong></p>
+                            <button class="btn btn-primary add-to-cart" data-id="4" data-name="Lave-linge Intelligent" data-price="649.99">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bedding Section -->
+        <div id="bedding" class="mb-5">
+            <h2 class="category-title">Literie</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Matelas" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Matelas Ergonomique</h5>
+                            <p class="card-text">160x200cm, Mémoire de forme</p>
+                            <p class="card-text"><strong>899.99 €</strong></p>
+                            <button class="btn btn-primary add-to-cart" data-id="5" data-name="Matelas Ergonomique" data-price="899.99">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cart-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Panier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cart-items"></div>
+                    <div class="text-end mt-3">
+                        <h5>Total: <span id="cart-total">0.00 €</span></h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continuer les achats</button>
+                    <button type="button" class="btn btn-primary" id="checkout-btn">Commander</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>À propos de Marcy Market</h5>
+                    <p>Votre destination shopping pour tous vos besoins en électronique, informatique, décoration et plus encore.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">À propos</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                        <li><a href="#" class="text-white">Conditions générales</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p>Email: contact@marcymarket.com<br>
+                    Tél: +237692911957</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let cart = [];
+        let cartTotal = 0;
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView();
+                }
+            });
+        });
+
+        function updateCartCount() {
+            document.querySelector('.cart-count').textContent = cart.length;
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            
+            cartItems.innerHTML = '';
+            cartTotal = 0;
+
+            cart.forEach((item, index) => {
+                cartTotal += item.price;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item d-flex justify-content-between align-items-center mb-2';
+                itemElement.innerHTML = `
+                    <div>
+                        <h6 class="mb-0">${item.name}</h6>
+                        <small>${item.price.toFixed(2)} €</small>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                cartItems.appendChild(itemElement);
+            });
+
+            cartTotalElement.textContent = cartTotal.toFixed(2) + ' €';
+        }
+
+        function addToCart(product) {
+            cart.push(product);
+            updateCartCount();
+            updateCartDisplay();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            updateCartDisplay();
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const product = {
+                    id: button.dataset.id,
+                    name: button.dataset.name,
+                    price: parseFloat(button.dataset.price)
+                };
+                addToCart(product);
+            });
+        });
+
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            if (cart.length > 0) {
+                alert('Merci de votre commande ! Redirection vers le paiement...');
+            } else {
+                alert('Votre panier est vide');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            new Typed('#typed-text', {
+                strings: [
+                    "Votre destination shopping préférée! 🛍️",
+                    "Découvrez notre sélection d'électronique de pointe 📱",
+                    "Des solutions informatiques innovantes 💻",
+                    "Une décoration qui vous ressemble 🏠",
+                    "L'électroménager qui simplifie votre quotidien ⚡",
+                    "Le confort ultime pour votre sommeil 🛏️",
+                    "Des prix imbattables toute l'année! 💯"
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                backDelay: 2000,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|'
+            });
+        });
+    </script>
+</body></html>
